@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Teachr;
+use App\Entity\Statics;
+
 
 class PostController extends AbstractController
 {
@@ -77,11 +79,17 @@ class PostController extends AbstractController
 
         // we update the count value in the statics table // 
 
+        $count = $doctrine->getRepository(Statics::class)->find(1);
+     
+
+       $count->setCount($count->getCount() + 1) ; 
+
+       $entityManager->flush() ;
+
 
         // we send a json response to the user
         
         return $this->json([$statusCode , $headers , ["success" => true , "message" => "object successfuly added to database"]]) ; 
-
 
     }
 }

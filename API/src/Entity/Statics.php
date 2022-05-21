@@ -14,7 +14,7 @@ class Statics
     private $id;
 
     #[ORM\Column(type: 'integer')]
-    private $count;
+    private $count  ; 
 
     public function getId(): ?int
     {

@@ -21,6 +21,8 @@ final class Version20220521001300 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE teachr CHANGE creation creation VARCHAR(10) NOT NULL');
+
+        $this->addSql('INSERT INTO statics (id , count) VALUES (1 ,0)') ; 
     }
 
     public function down(Schema $schema): void
