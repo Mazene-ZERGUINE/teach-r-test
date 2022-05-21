@@ -16,7 +16,7 @@ class Teachr
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
 
-    #[ORM\Column(type: 'string', length: 8)]
+    #[ORM\Column(type: 'string', length: 10)]
     private $creation;
 
     public function getId(): ?int
