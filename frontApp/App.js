@@ -1,112 +1,191 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
+import * as React from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
+  Text, 
   View,
-} from 'react-native';
+  StyleSheet,
+  Image,
+  SafeAreaView } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import Carousel from 'react-native-snap-carousel';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
+import DropShadow from 'react-native-drop-shadow';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+
+var returnButton = "<" ; 
+
+
+export default class App extends React.Component {
+
+
+  
+ 
+    constructor(props){
+        super(props);
+        this.state = {
+          activeIndex:0,
+          carouselItems: [
           {
-            color: isDarkMode ? Colors.white : Colors.black,
+              image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhKmZuDjd-ZGY4krk7Y4gSDZHTY31CCFpk_w&usqp=CAU",
+              text: "Text 1",
+              name:"Carla TIBICHE",
+              formation:"sécurité informatique",
+              desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
+
           },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
           {
-            color: isDarkMode ? Colors.light : Colors.dark,
+            image:"https://i.pinimg.com/550x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888.jpg",
+            text: "Text 2",
+            name:"Marcel ",
+            formation:"Kotlin",
+            desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
+
           },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+          {
+              image:"https://www.whatsappimages.in/wp-content/uploads/2021/12/girl-New-Superb-Whatsapp-Dp-Profile-Images-photo.jpg",
+              text: "Text 3",
+              name:"ahmed HAMED",
+              formation:"C++",
+              desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+          },
+          {
+              image:"https://i.pinimg.com/550x/7d/1a/3f/7d1a3f77eee9f34782c6f88e97a6c888.jpg",
+              text: "Text 4",
+              name:"jonnathan MBOSSA",
+              formation:"JAVA",
+              desc:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut "
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+          },
+       
+        ]
+      }
+    }
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    _renderItem({item,index}){
+        return (
+          <View style={{
+              backgroundColor:'white',
+              zIndex:2,
+              borderColor:"lightgrey",
+              borderWidth:1,
+              shadowOffset:{width:15 , height:15},
+              shadowOpacity:0.7,
+              elevation:20,
+              borderRadius: 10,
+              height: 430,
+              padding: 20,
+              marginLeft: 10,
+              marginRight: 10, }}>
+            <Image
+              source={{uri:item.image}}
+              style={{width:80,height:80 , borderRadius:200/2}}
+            /> 
+            <Text style={styles.name}>{item.name}</Text>
+            <Text style={{color:'grey', marginTop:30}}>Formation</Text>
+            <Text style={styles.formation}>{item.formation}</Text>
+            <Text style={{color:'grey', marginTop:20}}>Description</Text>
+            <Text>{item.desc}</Text>
+            <Pressable style={styles.buttonA}>
+              <Text style={{color:'white' , fontSize:13}}>Prendre un cours avec ce teacher</Text>
+            </Pressable>
+            
+            <Pressable style={styles.buttonB}>
+              <Text style={{color:'#faa405' , fontSize:13}} >retirer ce teacher de mes favoris</Text>
+            </Pressable>
+            
+          </View>
+
+        )
+    }
+
+    render() {
+        return (
+          <SafeAreaView style={{flex:1}}>
+
+            <View style={styles.header}>
+            <Pressable>
+            <Text style={styles.ret}>
+              {
+                returnButton 
+              }
+            </Text>
+            </Pressable>
+            <Text style={styles.title}>
+                Teach'rs Favoris
+            </Text>
+
+            </View>
+
+
+            <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', marginTop:60 }}>
+                <Carousel
+                  layout={"default"}
+                  ref={ref => this.carousel = ref}
+                  data={this.state.carouselItems}
+                  sliderWidth={300}
+                  itemWidth={300}
+                  renderItem={this._renderItem}
+                  onSnapToItem = { index => this.setState({activeIndex:index}) } />
+            </View>
+          </SafeAreaView>
+        );
+    }
+
+    
+}
+
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  header:{
+    backgroundColor: "#1E6CF0",
+    height:220,
+ 
+    
+  } , 
+ 
+  title:{
+     color:"white",
+     fontSize:30,
+     fontWeight:"bold",
+     marginLeft:30,
+     marginTop:20
+     
+    },
+    ret:{
+      fontSize:35,
+      fontWeight:"bold",
+      marginTop:60,
+      marginLeft:30,
+      color:"white"
+    },
+    name:{
+      position:'absolute',
+      marginLeft:120,
+      marginTop:45,
+      fontSize:18
+    },
+    buttonA:{
 
-export default App;
+      marginTop:30,
+      marginBottom:10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 4,
+      backgroundColor: '#1E6CF0',
+      
+    },
+    buttonB:{
+
+      marginBottom:10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderColor:"#faa405",
+      borderWidth:1,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      borderRadius: 4,
+    }
+ });
+ 
