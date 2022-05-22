@@ -3,21 +3,25 @@ import {
   Text, 
   View,
   StyleSheet,
+  
   Image,
   SafeAreaView } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
 
+import { useState } from 'react/cjs/react.production.min';
+
 import DropShadow from 'react-native-drop-shadow';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
-var returnButton = "<" ; 
 
 
 export default class App extends React.Component {
 
-
   
+
+  //const [height , setHeight] = React.useState("") ; 
+
  
     constructor(props){
         super(props);
@@ -57,9 +61,13 @@ export default class App extends React.Component {
 
           },
        
-        ]
+        ],
+        headerHeight:220 ,
+        returnButton:"<",
       }
     }
+
+
 
     _renderItem({item,index}){
         return (
@@ -98,15 +106,36 @@ export default class App extends React.Component {
         )
     }
 
+   
     render() {
+
+
+
+
+
         return (
           <SafeAreaView style={{flex:1}}>
 
-            <View style={styles.header}>
-            <Pressable>
+            <View style={{height:this.state.headerHeight , backgroundColor: "#1E6CF0",}}>
+            <Pressable 
+             onPress={() => {
+
+                if (this.state.returnButton == "<"){
+                this.state.headerHeight = 100 ;
+                console.log(this.state.headerHeight);
+                this.state.returnButton = ">"
+                }
+                else if (this.state.returnButton == ">") 
+                {
+                  this.state.headerHeight = 220 ;
+                console.log(this.state.headerHeight);
+                this.state.returnButton = "<"
+                }
+        }}>
+
             <Text style={styles.ret}>
               {
-                returnButton 
+                this.state.returnButton 
               }
             </Text>
             </Pressable>
@@ -136,12 +165,7 @@ export default class App extends React.Component {
 
 
 const styles = StyleSheet.create({
-  header:{
-    backgroundColor: "#1E6CF0",
-    height:220,
- 
-    
-  } , 
+
  
   title:{
      color:"white",
