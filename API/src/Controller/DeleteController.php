@@ -20,7 +20,7 @@ class DeleteController extends AbstractController
         // request status code 
         $statusCode = 200 ; 
 
-        // headers 
+        // header
 
         $headers = [
             "Content-Type" => "application/json",
